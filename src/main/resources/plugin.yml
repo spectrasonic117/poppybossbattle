@@ -1,5 +1,13 @@
 name: poppybossbattle
-version: '${version}'
+version: "${version}"
 main: com.spectrasonic.poppybossbattle.Main
-api-version: '1.21.1'
+api-version: "1.21"
 authors: [Spectrasonic]
+commands:
+    poppybossbattle:
+        aliases: [pobb]
+        description: Comandos del plugin poppybossbattle
+        permission: poppybossbattle.admin
+permissions:
+    poppybossbattle.admin:
+        default: op

@@ -1,0 +1,10 @@
+positions:
+    pos1: { x: 0, y: 0, z: 0 }
+    pos2: { x: 0, y: 0, z: 0 }
+    pos3: { x: 0, y: 0, z: 0 }
+    pos4: { x: 0, y: 0, z: 0 }
+    pos5: { x: 0, y: 0, z: 0 }
+
+counter_seconds: 10
+
+console_to_execute: say Supuestamente esto es un comando de depuración
