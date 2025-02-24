@@ -25,7 +25,7 @@ public class GameManager {
     private final Plugin plugin;
     private final List<Location> positions = new ArrayList<>();
     private int counterSeconds;
-    private String consoleCommand;
+    // private String consoleCommand;
     private BukkitTask countdownTask;
     private BossBar bossBar;
     private BukkitTask gameLoopTask;
@@ -45,7 +45,7 @@ public class GameManager {
             positions.add(new Location(world, x, y, z));
         }
         counterSeconds = plugin.getConfig().getInt("counter_seconds", 10);
-        consoleCommand = plugin.getConfig().getString("console_to_execute", "say Supuestamente esto es un comando de depuración");
+        // consoleCommand = plugin.getConfig().getString("console_to_execute", "say Supuestamente esto es un comando de depuración");
     }
 
     public void startGameLoop() {
@@ -106,13 +106,16 @@ public class GameManager {
         // Agregar bossbar a todos los jugadores en línea
         Bukkit.getOnlinePlayers().forEach(player -> player.showBossBar(bossBar));
 
+        // Freeze players with the "doey" tag
+        PlayerFreezeUtils.freezePlayersWithTag("doey");
+
         countdownTask = new BukkitRunnable() {
             @Override
             public void run() {
                 secondsLeft[0]--;
                 if (secondsLeft[0] < 0) {
                     // Ejecutar comando en consola y finalizar
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), consoleCommand);
+                    // Bukkit.dispatchCommand(Bukkit.getConsoleSender(), consoleCommand);
                     cancelCountdown();
                     cancel();
                     return;
@@ -130,10 +133,6 @@ public class GameManager {
             countdownTask.cancel();
             countdownTask = null;
         }
-        if (bossBar != null) {
-            // Remove bossbar from all players
-            Bukkit.getOnlinePlayers().forEach(player -> player.hideBossBar(bossBar));
-            bossBar = null;
-        }
+        PlayerFreezeUtils.unfreezePlayersWithTag("doey");
     }
 }

@@ -8,6 +8,10 @@ commands:
         aliases: [pobb]
         description: Comandos del plugin poppybossbattle
         permission: poppybossbattle.admin
+    doey:
+        permission: poppybossbattle.admin
 permissions:
     poppybossbattle.admin:
+        default: op
+    doey:
         default: op
