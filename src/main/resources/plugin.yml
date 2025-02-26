@@ -13,5 +13,6 @@ commands:
 permissions:
     poppybossbattle.admin:
         default: op
-    doey:
+    poppybossbattle.debug:
+        description: Allows seeing debug messages
         default: op

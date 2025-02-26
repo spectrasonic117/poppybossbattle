@@ -76,21 +76,32 @@ public class GameManager {
     }
 
     private boolean checkPlayersOnPositions() {
-        for (Location loc : positions) {
-            boolean occupied = false;
-            for (Player player : loc.getWorld().getPlayers()) {
-                // Se fija si la diferencia es menor a 1 bloque en cada eje.
-                if (Math.abs(player.getLocation().getX() - loc.getX()) < 1 &&
-                    Math.abs(player.getLocation().getY() - loc.getY()) < 1 &&
-                    Math.abs(player.getLocation().getZ() - loc.getZ()) < 1) {
-                    occupied = true;
-                    break;
-                }
+    int positionIndex = 1;
+    boolean allOccupied = true;
+    
+    for (Location loc : positions) {
+        boolean occupied = false;
+        for (Player player : loc.getWorld().getPlayers()) {
+            if (Math.abs(player.getLocation().getX() - loc.getX()) < 1 &&
+                Math.abs(player.getLocation().getY() - loc.getY()) < 1 &&
+                Math.abs(player.getLocation().getZ() - loc.getZ()) < 1) {
+                occupied = true;
+                DebugManager.sendDebugMessage("Player " + player.getName() + " positioned at: Position " + positionIndex);
+                break;
             }
-            if (!occupied) return false;
         }
-        return true;
+        if (!occupied) {
+            allOccupied = false;
+        }
+        positionIndex++;
     }
+    
+    if (allOccupied) {
+        DebugManager.sendDebugMessage("All players are in position!");
+    }
+    
+    return allOccupied;
+}
 
     private void startCountdown() {
         final int totalSeconds = counterSeconds;
