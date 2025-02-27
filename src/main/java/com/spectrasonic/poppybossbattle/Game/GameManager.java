@@ -127,6 +127,7 @@ public class GameManager {
                 if (secondsLeft[0] < 0) {
                     // Ejecutar comando en consola y finalizar
                     // Bukkit.dispatchCommand(Bukkit.getConsoleSender(), consoleCommand);
+                    showTitleToAllPlayers();
                     cancelCountdown();
                     cancel();
                     return;
@@ -145,5 +146,21 @@ public class GameManager {
             countdownTask = null;
         }
         PlayerFreezeUtils.unfreezePlayersWithTag("doey");
+    }
+
+    private void showTitleToAllPlayers() {
+        // Usar Adventure API para mostrar el título
+        net.kyori.adventure.title.Title title = net.kyori.adventure.title.Title.title(
+            MiniMessage.miniMessage().deserialize("<white><bold>Golpea a Doey</bold></white>"),
+            net.kyori.adventure.text.Component.empty(),
+            net.kyori.adventure.title.Title.Times.times(
+                java.time.Duration.ofMillis(500),  // Fade in
+                java.time.Duration.ofSeconds(2),   // Stay
+                java.time.Duration.ofMillis(500)   // Fade out
+            )
+        );
+        
+        // Mostrar el título a todos los jugadores en línea
+        Bukkit.getOnlinePlayers().forEach(player -> player.showTitle(title));
     }
 }
