@@ -1,6 +1,7 @@
 package com.spectrasonic.poppybossbattle;
 
 import co.aikar.commands.PaperCommandManager;
+import co.aikar.commands.ConditionFailedException;
 import com.spectrasonic.poppybossbattle.Commands.ReloadCommand;
 import com.spectrasonic.poppybossbattle.Commands.DoeyCommand;
 import com.spectrasonic.poppybossbattle.Commands.DoeyBossCommand;
@@ -37,6 +38,19 @@ public final class Main extends JavaPlugin {
 
     public void registerCommands() {
         PaperCommandManager commandManager = new PaperCommandManager(this);
+
+        commandManager.getCommandConditions().addCondition(Integer.class, "limits", (context, execution, value) -> {
+            int min = context.getConfigValue("min", 0);
+            int max = context.getConfigValue("max", Integer.MAX_VALUE);
+            
+            if (value < min) {
+                throw new ConditionFailedException("El valor debe ser al menos " + min);
+            }
+            if (value > max) {
+                throw new ConditionFailedException("El valor no puede ser mayor que " + max);
+            }
+        });
+        
         commandManager.registerCommand(new ReloadCommand(this));
         commandManager.registerCommand(new DoeyCommand(this));
         commandManager.registerCommand(new DoeyBossCommand(this));
