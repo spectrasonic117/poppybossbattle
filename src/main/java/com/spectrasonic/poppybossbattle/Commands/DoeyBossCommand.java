@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.command.CommandSender;
 
 @CommandAlias("doeyboss")
@@ -39,15 +40,43 @@ public class DoeyBossCommand extends BaseCommand {
 
     @Subcommand("state")
     @CommandCompletion("0|1|2|3|4")
-    @Description("Set the boss bar progress state (0-4)")
+    @Description("Set the boss bar progress state (0-4, where 0 is empty and 4 is full)")
     public void setState(CommandSender sender, @Conditions("limits:min=0,max=4") Integer state) {
         if (bossBar == null) {
-            MessageUtils.sendMessage(sender, "<red>Boss bar is not active! Use <yellow>/doeyboss start</yellow> first</red>");
+            MessageUtils.sendMessage(sender, "<red>Boss bar is not active! Use <yellow>/doeyboss display</yellow> first</red>");
             return;
         }
 
-        float progress = (4 - state) / 4.0f;
-        bossBar.progress(progress);
+        // Get current progress to animate from
+        final float currentProgress = bossBar.progress();
+        // Calculate target progress (inverted: 0 = empty, 4 = full)
+        final float targetProgress = state / 4.0f;
+        
+        // Create a smooth transition task
+        new BukkitRunnable() {
+            // Number of steps for smooth transition
+            private static final int TRANSITION_STEPS = 20;
+            private int step = 0;
+            
+            @Override
+            public void run() {
+                if (step >= TRANSITION_STEPS || bossBar == null) {
+                    // Ensure we reach exactly the target value at the end
+                    if (bossBar != null) {
+                        bossBar.progress(targetProgress);
+                    }
+                    this.cancel();
+                    return;
+                }
+                
+                // Calculate intermediate progress value using linear interpolation
+                float progress = currentProgress + ((targetProgress - currentProgress) * 
+                                 ((float) step / TRANSITION_STEPS));
+                bossBar.progress(progress);
+                step++;
+            }
+        }.runTaskTimer(plugin, 0L, 1L);
+        
         MessageUtils.sendMessage(sender, "<green>Boss bar state set to: <yellow>" + state + "</yellow></green>");
     }
 
