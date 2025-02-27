@@ -1,0 +1,26 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "gradle",
+            "id": "/Users/spectra/Desktop/poppybossbattlebuildpoppybossbattle",
+            "script": "build",
+            "description": "Assembles and tests this project.",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "project": "poppybossbattle",
+            "buildFile": "/Users/spectra/Desktop/poppybossbattle/build.gradle",
+            "rootProject": "poppybossbattle",
+            "projectFolder": "/Users/spectra/Desktop/poppybossbattle",
+            "workspaceFolder": "/Users/spectra/Desktop/poppybossbattle",
+            "args": "",
+            "javaDebug": false,
+            "problemMatcher": [
+                "$gradle"
+            ],
+            "label": "gradle: build"
+        }
+    ]
+}

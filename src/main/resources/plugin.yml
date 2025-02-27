@@ -10,6 +10,8 @@ commands:
         permission: poppybossbattle.admin
     doey:
         permission: poppybossbattle.admin
+    doeyboss:
+        permission: poppybossbattle.admin
 permissions:
     poppybossbattle.admin:
         default: op

@@ -3,6 +3,7 @@ package com.spectrasonic.poppybossbattle;
 import co.aikar.commands.PaperCommandManager;
 import com.spectrasonic.poppybossbattle.Commands.ReloadCommand;
 import com.spectrasonic.poppybossbattle.Commands.DoeyCommand;
+import com.spectrasonic.poppybossbattle.Commands.DoeyBossCommand;
 import com.spectrasonic.poppybossbattle.Game.GameManager;
 import com.spectrasonic.poppybossbattle.Utils.MessageUtils;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -38,6 +39,7 @@ public final class Main extends JavaPlugin {
         PaperCommandManager commandManager = new PaperCommandManager(this);
         commandManager.registerCommand(new ReloadCommand(this));
         commandManager.registerCommand(new DoeyCommand(this));
+        commandManager.registerCommand(new DoeyBossCommand(this));
     }
 
     public void registerEvents() {
