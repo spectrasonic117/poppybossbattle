@@ -1,6 +1,7 @@
 package com.spectrasonic.poppybossbattle.Commands;
 
 import com.spectrasonic.poppybossbattle.Utils.MessageUtils;
+import com.spectrasonic.poppybossbattle.Game.GameManager;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import com.spectrasonic.poppybossbattle.Main;
@@ -18,6 +19,7 @@ public class DoeyBossCommand extends BaseCommand {
 
     private final Main plugin;
     private BossBar bossBar;
+    private final GameManager gameManager;
 
     @Subcommand("display")
     @Description("Start and show the Doey boss bar")
@@ -91,5 +93,12 @@ public class DoeyBossCommand extends BaseCommand {
         Bukkit.getOnlinePlayers().forEach(player -> player.hideBossBar(bossBar));
         bossBar = null;
         MessageUtils.sendMessage(sender, "<green>Boss bar removed successfully!</green>");
+    }
+
+    @Subcommand("sendtitle")
+    @Description("Send the 'Golpea a Doey' title to all players")
+    public void onSendTitle(CommandSender sender) {
+        gameManager.showTitleToAllPlayers();
+        MessageUtils.sendMessage(sender, "<green>Title sent to all players successfully!</green>");
     }
 }

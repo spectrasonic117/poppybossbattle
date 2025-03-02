@@ -148,7 +148,7 @@ public class GameManager {
         PlayerFreezeUtils.unfreezePlayersWithTag("doey");
     }
 
-    private void showTitleToAllPlayers() {
+    public void showTitleToAllPlayers() {
         // Usar Adventure API para mostrar el título
         net.kyori.adventure.title.Title title = net.kyori.adventure.title.Title.title(
             MiniMessage.miniMessage().deserialize("<white><bold>Golpea a Doey</bold></white>"),

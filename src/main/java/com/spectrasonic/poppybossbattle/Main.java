@@ -53,7 +53,7 @@ public final class Main extends JavaPlugin {
         
         commandManager.registerCommand(new ReloadCommand(this));
         commandManager.registerCommand(new DoeyCommand(this));
-        commandManager.registerCommand(new DoeyBossCommand(this));
+        commandManager.registerCommand(new DoeyBossCommand(this, gameManager));
     }
 
     public void registerEvents() {
