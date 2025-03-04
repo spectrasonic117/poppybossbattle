@@ -109,7 +109,7 @@ public class GameManager {
 
         // Crear y mostrar bossbar usando MiniMessage
         bossBar = BossBar.bossBar(
-            MiniMessage.miniMessage().deserialize("Countdown: <white>" + secondsLeft[0] + "</white>"),
+            MiniMessage.miniMessage().deserialize("Espera: <white>" + secondsLeft[0] + "</white>"),
             1.0f,
             BossBar.Color.WHITE,
             BossBar.Overlay.PROGRESS
@@ -145,7 +145,12 @@ public class GameManager {
             countdownTask.cancel();
             countdownTask = null;
         }
+        if (bossBar != null) {
+            Bukkit.getOnlinePlayers().forEach(player -> player.hideBossBar(bossBar));
+            bossBar = null;
+        }
         PlayerFreezeUtils.unfreezePlayersWithTag("doey");
+        
     }
 
     public void showTitleToAllPlayers() {
